@@ -22,10 +22,8 @@ module NBTUtils
         @compressed = false
       end
 
-      last_byte = content.read(1).bytes.first
-      klass = NBTUtils::Tag.tag_type_to_class(last_byte)
-
-      @tag = klass.new(content, named: true)
+      reader = Reader.new(content)
+      @tag = reader.read.tag
     end
 
     def write(write_path = path, write_tag = tag, write_compressed = compressed)
